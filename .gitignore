@@ -1,5 +1,5 @@
-dataset/
-scr/
-scr/__pycache__/
+result/
+src/__pycache__/
+src/vis_atten_w.py
 trash/
 VGG/
