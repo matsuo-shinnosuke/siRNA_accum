@@ -1,8 +1,13 @@
 # Selective siRNA accumulation depends on interactions of flexible signal sequences and a novel RNA-binding factor in plants
 Natsumi Enoki, Eriko Kuwada, Shinnosuke Matsuo, Naoko Fujita, Saki Noda, Yoshikatsu Matsubayashi, Seiichi Uchida, Takashi Akagi
 
-<!-- ![Illustration](./image/overview.png) -->
-> abstact
+<!-- > abstract -->
+
+<!-- Concept and experimental designs of this study.
+![Illustration](./image/overview1.png)
+
+Deep learning predicts highly accumulated siRNA from the flexible signal sequences.
+![Illustration](./image/overview2.png) -->
 
 ## Usage
 Please see [`USAGE`](USAGE.md) for brief instructions on installation and basic usage examples.
