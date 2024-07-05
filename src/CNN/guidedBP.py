@@ -68,11 +68,11 @@ def main(args):
         partial_model, target_id=1, relu=True,
     )
 
-    x = X[args.example_id][np.newaxis,]
-    x_origin = np.array(list(X_origin[args.example_id]))[:,np.newaxis].transpose(1,0)
+    x = X[args.id][np.newaxis,]
+    x_origin = np.array(list(X_origin[args.id]))[:,np.newaxis].transpose(1,0)
     analysis_guidedbackprop = guidedbackprop_analyzer.analyze(x)[0,:,0,:].transpose(1,0)
 
-    with open(f'{args.output_path}/guidedBP_{args.example_id}.csv', 'w') as f_handle:
+    with open(f'{args.output_path}/guidedBP_{args.id}.csv', 'w') as f_handle:
         np.savetxt(f_handle, x_origin, delimiter=',', fmt='%s')
         np.savetxt(f_handle, analysis_guidedbackprop, delimiter=',', fmt='%.4f')
 
@@ -84,7 +84,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', default=42,  type=int)
     parser.add_argument('--dataset_path', default='./dataset/', type=str)
     parser.add_argument('--output_path', default='./result/', type=str)
-    parser.add_argument('--example_id', default=0, type=int)
+    parser.add_argument('--id', default=0, type=int)
     args = parser.parse_args()
 
     # ----

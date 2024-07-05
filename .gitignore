@@ -1,6 +1,6 @@
 image/
 result/
 src/__pycache__/
-src/vis_atten_w.py
+src/CNN/__pycache__/
+src/CvT/__pycache__/
 trash/
-VGG/

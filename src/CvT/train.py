@@ -4,11 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
-from sklearn.metrics import confusion_matrix
-import matplotlib.pyplot as plt  
-import numpy as np  
-import sys
-from sklearn.utils.class_weight import compute_class_weight
+import numpy as np
 import argparse
 from sklearn.metrics import roc_auc_score
 import logging
@@ -21,19 +17,19 @@ def main(args):
     fix_seed(seed=args.seed)
     make_folder(args.output_path)
 
-    ############ create loger ############
+    # ---- create loger ----
     stream_handler = logging.StreamHandler()
     file_handler = logging.FileHandler(args.output_path+'training.log')
     logging.basicConfig(level=logging.INFO, handlers=[
                         stream_handler, file_handler])
     logging.info(args)
 
-    ############ create loader ############
+    # ---- create loader ----
     X = np.concatenate([np.load(args.dataset_path+'X_pos.npy'),
                        np.load(args.dataset_path+'X_neg.npy')])
     Y = np.concatenate([np.load(args.dataset_path+'Y_pos.npy'),
                        np.load(args.dataset_path+'Y_neg.npy')])
-
+    
     X_train, X_test, Y_train, Y_test = train_test_split(
         X, Y, test_size=args.test_rate, random_state=args.seed)
 
@@ -53,7 +49,7 @@ def main(args):
         num_workers=args.num_workers
     )
 
-    ########### make mdoel ###########
+    # ---- create model ----
     model = TransformerClassification(
         ch = X.shape[2], 
         length = X.shape[1],
@@ -103,7 +99,7 @@ def main(args):
         history['train_loss'].append(train_loss)
         history['train_auc'].append(train_auc)
 
-        ####################################
+        # ----
         model.eval()
 
         losses = []
@@ -121,24 +117,24 @@ def main(args):
 
                 losses.append(loss.item())
                 test_gt.extend(label.cpu().detach().numpy())
-                test_pred.extend(prob[:, 1].cpu().detach().numpy())
+                test_pred.extend(prob.cpu().detach().numpy())
                 test_atten_w.extend(w.detach().cpu().numpy())
 
         test_loss = np.array(losses).mean()
-        test_auc = roc_auc_score(test_gt, test_pred)
+        test_gt, test_pred = np.array(test_gt), np.array(test_pred)
+        test_auc = roc_auc_score(test_gt, test_pred[:, 1])
 
         history['test_loss'].append(test_loss)
         history['test_auc'].append(test_auc)
 
         logging.info('[%d/%d]: train_auc: %.3f, train_loss: %.3f, test_auc: %.3f, test_loss: %.3f'
               % (epoch+1, args.num_epoch, train_auc, train_loss, test_auc, test_loss))
-        
 
-        ########### save ###########
+        # ---- save mdoel ----
         visualize_loss_auc(history, args.output_path)
         if history['best_auc'] < test_auc:
             history['best_auc'] = test_auc
-            torch.save(model.state_dict(), '%s/mdoel.pkl' % args.output_path)
+            torch.save(model.state_dict(), '%s/model.pkl' % args.output_path) 
 
     return 0
 
@@ -148,7 +144,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--seed', default=42,  type=int)
     parser.add_argument('--device', default='cuda:0', type=str)
-    parser.add_argument('--num_epoch', default=100, type=int)
+    parser.add_argument('--num_epoch', default=30, type=int)
     parser.add_argument('--lr', default=0.001, type=float)
     parser.add_argument('--batch_size', default=512, type=int)
     parser.add_argument('--num_workers', default=2, type=int)
@@ -159,7 +155,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--dataset_path', default='./dataset/', type=str)
     parser.add_argument('--test_rate', default=0.3, type=float)
-    parser.add_argument('--output_path', default='./result/', type=str)
+    parser.add_argument('--output_path', default='./result_cvt/', type=str)
     args = parser.parse_args()
 
     # ----

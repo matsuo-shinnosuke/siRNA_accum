@@ -6,4 +6,6 @@ seaborn
 scipy
 tqdm
 Pillow
+innvestigate
+scikit-image
 autopep8
