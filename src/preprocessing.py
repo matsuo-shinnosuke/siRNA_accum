@@ -49,12 +49,13 @@ def array2dna(numarr):
     return DNAstring
 
 def load_data(path_pos, path_neg, dna_len):
-    X_pos = []
+    X_pos, X_origin_pos = [], []
     Y_pos = []
     f = open(path_pos, "r")
     line = f.readline()
     while line:
         line2 = line.rstrip()
+        X_origin_pos.append(line2)
         x = np.array(list(map(dna2array, line2))).reshape(-1)
         if x.shape[0] == dna_len:
             OneHotArr = np.eye(5)[x]
@@ -62,15 +63,16 @@ def load_data(path_pos, path_neg, dna_len):
             Y_pos.append(1)
         line = f.readline()
 
-    X_pos = np.array(X_pos)
+    X_pos, X_origin_pos = np.array(X_pos), np.array(X_origin_pos)
     Y_pos = np.array(Y_pos)
 
-    X_neg = []
+    X_neg, X_origin_neg = [], []
     Y_neg = []
     f = open(path_neg, "r")
     line = f.readline()
     while line:
         line2 = line.rstrip()
+        X_origin_neg.append(line2)
         x = np.array(list(map(dna2array, line2))).reshape(-1)
         if x.shape[0] == dna_len:
             OneHotArr = np.eye(5)[x]
@@ -78,10 +80,10 @@ def load_data(path_pos, path_neg, dna_len):
             Y_neg.append(0)
         line = f.readline()
 
-    X_neg = np.array(X_neg)
+    X_neg, X_origin_neg = np.array(X_neg), np.array(X_origin_neg)
     Y_neg = np.array(Y_neg)
 
-    return X_pos, Y_pos, X_neg, Y_neg
+    return X_pos, X_origin_pos, Y_pos, X_neg, X_origin_neg, Y_neg
 
 
 if __name__ == '__main__':
@@ -98,10 +100,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # ----
-    X_pos, Y_pos, X_neg, Y_neg = load_data(args.path_pos, args.path_neg, args.dna_len)
+    X_pos, X_origin_pos, Y_pos, X_neg, X_origin_neg, Y_neg = load_data(args.path_pos, args.path_neg, args.dna_len)
     np.save(args.output_path+'X_pos', X_pos)
+    np.save(args.output_path+'X_origin_pos', X_origin_pos)
     np.save(args.output_path+'Y_pos', Y_pos)
     np.save(args.output_path+'X_neg', X_neg)
+    np.save(args.output_path+'X_origin_neg', X_origin_neg)
     np.save(args.output_path+'Y_neg', Y_neg)
 
     print('=== X_pos ===')
