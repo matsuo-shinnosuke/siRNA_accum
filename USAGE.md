@@ -63,7 +63,7 @@ python src/preprocessing.py --dna_len=151 --path_pos='./dataset/positive.txt' --
 python src/CvT/train.py --output_path='result_cvt/'
 ```
 
-(2) Inference using
+(3) Inference the data using
 ```
 python src/CvT/attention.py --output_path='result_cvt/'
 ```
