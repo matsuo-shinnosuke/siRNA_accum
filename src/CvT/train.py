@@ -131,7 +131,7 @@ def main(args):
               % (epoch+1, args.num_epoch, train_auc, train_loss, test_auc, test_loss))
 
         # ---- save mdoel ----
-        visualize_loss_auc(history, args.output_path)
+        # visualize_loss_auc(history, args.output_path)
         if history['best_auc'] < test_auc:
             history['best_auc'] = test_auc
             torch.save(model.state_dict(), '%s/model.pkl' % args.output_path) 
@@ -151,7 +151,7 @@ if __name__ == '__main__':
     
     parser.add_argument('--depth', default=6, type=int)
     parser.add_argument('--model_dim', default=64, type=int)
-    parser.add_argument('--bin', default=4, type=int)
+    parser.add_argument('--bin', default=1, type=int)
 
     parser.add_argument('--dataset_path', default='./dataset/', type=str)
     parser.add_argument('--test_rate', default=0.3, type=float)
