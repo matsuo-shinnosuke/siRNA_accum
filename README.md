@@ -4,7 +4,7 @@ Natsumi Enoki, Eriko Kuwada, Shinnosuke Matsuo, Naoko Fujita, Saki Noda, Yoshika
 > Small interference RNA (siRNA) selectively accumulates and acts in RNA interference (RNAi). Although the components involved in siRNA production have long been the focus of studies to elucidate RNAi processes, the mechanism(s) for selectivity of siRNA (or RNAi effectivity) remains unclear. In a novel approach, we developed a progressive deep learning (DL) framework integrating Transformer and convolutional neural networks to predict the sequences of selectively accumulated siRNAs across various land plant species. These approaches achieved high-accuracy prediction of selectively accumulated 21-nt siRNAs and further identified their key signals, which are positionally and linguistically flexible sequences surrounding the target siRNA. We experimentally validated the contribution of these flexible key signal sequences to siRNA accumulation selectivity using virus-induced gene silencing (VIGS) in Nicotiana benthamiana, and identified RNA-binding proteins that directly recognize the key signal sequences to act for selective siRNA accumulation. These insights provide a novel framework for investigating RNAi mechanisms in plants.
 
 Concept and experimental designs of this study.
-![Illustration](./image/overview1.png)
+![Illustration](./image/overview.png)
 
 ## Usage
 Please see [`USAGE`](USAGE.md) for brief instructions on installation and basic usage examples.
