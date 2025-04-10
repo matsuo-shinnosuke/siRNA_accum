@@ -154,7 +154,7 @@ if __name__ == '__main__':
     parser.add_argument('--bin', default=1, type=int)
 
     parser.add_argument('--dataset_path', default='./dataset/', type=str)
-    parser.add_argument('--test_rate', default=0.3, type=float)
+    parser.add_argument('--test_rate', default=0.25, type=float)
     parser.add_argument('--output_path', default='./result_cvt/', type=str)
     args = parser.parse_args()
 
