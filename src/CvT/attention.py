@@ -53,7 +53,7 @@ def main(args):
 
             gt.extend(label.cpu().detach().numpy())
             prob.extend(F.softmax(y, dim=1).cpu().detach().numpy())
-            attention.extend(w.detach().cpu().numpy())
+            attention.extend(w.detach().cpu().numpy().astype(np.float16))
 
     gt, prob = np.array(gt), np.array(prob)
     attention = np.array(attention)[:, 0, 1:]
