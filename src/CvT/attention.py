@@ -90,7 +90,7 @@ if __name__ == '__main__':
     
     parser.add_argument('--depth', default=6, type=int)
     parser.add_argument('--model_dim', default=64, type=int)
-    parser.add_argument('--bin', default=4, type=int)
+    parser.add_argument('--bin', default=1, type=int)
 
     parser.add_argument('--dataset_path', default='./dataset/', type=str)
     parser.add_argument('--output_path', default='./result_cvt/', type=str)
